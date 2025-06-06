@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package ns.notification.service.api.v1;
+
+option go_package = "github.com/neryzx-ns/notification-service-api/v1";
+
+service NotificationService {
+  rpc CreateNotificationTemplate(CreateNotificationTemplateRequest) returns (CreateNotificationTemplateReplay) {}
+}
+
+message NotificationTemplate {
+  string id = 1;
+  string name = 2;
+  string displayname = 3;
+  string content = 4;
+  map<string, string> params = 5;
+}
+
+message CreateNotificationTemplateRequest {
+  string displayname = 1;
+  string content = 2;
+  map<string, string> params = 3;
+}
+
+message CreateNotificationTemplateReplay {
+  NotificationTemplate template = 1;
+}
