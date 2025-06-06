@@ -1,4 +1,4 @@
-module github.com/neryzx-ns/notification-service-api
+module github.com/neyrzx-ns/notification-service-api
 
 go 1.24.3
 
