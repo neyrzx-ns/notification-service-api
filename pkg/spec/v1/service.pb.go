@@ -24,8 +24,8 @@ const (
 type NotificationTemplate struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Displayname   string                 `protobuf:"bytes,3,opt,name=displayname,proto3" json:"displayname,omitempty"`
+	Slug          string                 `protobuf:"bytes,2,opt,name=slug,proto3" json:"slug,omitempty"`
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	Content       string                 `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
 	Params        map[string]string      `protobuf:"bytes,5,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
@@ -69,16 +69,16 @@ func (x *NotificationTemplate) GetId() string {
 	return ""
 }
 
-func (x *NotificationTemplate) GetName() string {
+func (x *NotificationTemplate) GetSlug() string {
 	if x != nil {
-		return x.Name
+		return x.Slug
 	}
 	return ""
 }
 
-func (x *NotificationTemplate) GetDisplayname() string {
+func (x *NotificationTemplate) GetName() string {
 	if x != nil {
-		return x.Displayname
+		return x.Name
 	}
 	return ""
 }
@@ -99,7 +99,7 @@ func (x *NotificationTemplate) GetParams() map[string]string {
 
 type CreateNotificationTemplateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Displayname   string                 `protobuf:"bytes,1,opt,name=displayname,proto3" json:"displayname,omitempty"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
 	Params        map[string]string      `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
@@ -136,9 +136,9 @@ func (*CreateNotificationTemplateRequest) Descriptor() ([]byte, []int) {
 	return file_spec_v1_service_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateNotificationTemplateRequest) GetDisplayname() string {
+func (x *CreateNotificationTemplateRequest) GetName() string {
 	if x != nil {
-		return x.Displayname
+		return x.Name
 	}
 	return ""
 }
@@ -205,18 +205,18 @@ var File_spec_v1_service_proto protoreflect.FileDescriptor
 
 const file_spec_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"\x15spec/v1/service.proto\x12\x1ens.notification.service.api.v1\"\x8b\x02\n" +
+	"\x15spec/v1/service.proto\x12\x1ens.notification.service.api.v1\"\xfd\x01\n" +
 	"\x14NotificationTemplate\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vdisplayname\x18\x03 \x01(\tR\vdisplayname\x12\x18\n" +
+	"\x04slug\x18\x02 \x01(\tR\x04slug\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12\x18\n" +
 	"\acontent\x18\x04 \x01(\tR\acontent\x12X\n" +
 	"\x06params\x18\x05 \x03(\v2@.ns.notification.service.api.v1.NotificationTemplate.ParamsEntryR\x06params\x1a9\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x81\x02\n" +
-	"!CreateNotificationTemplateRequest\x12 \n" +
-	"\vdisplayname\x18\x01 \x01(\tR\vdisplayname\x12\x18\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xf3\x01\n" +
+	"!CreateNotificationTemplateRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\tR\acontent\x12e\n" +
 	"\x06params\x18\x03 \x03(\v2M.ns.notification.service.api.v1.CreateNotificationTemplateRequest.ParamsEntryR\x06params\x1a9\n" +
 	"\vParamsEntry\x12\x10\n" +
