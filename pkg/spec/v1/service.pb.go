@@ -21,31 +21,85 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type NotificationTemplate struct {
+type Template_ChannelType int32
+
+const (
+	Template_CHANNEL_TYPE_UNSPECIFIED     Template_ChannelType = 0
+	Template_CHANNEL_TYPE_PUSH_MOBILE_APP Template_ChannelType = 1
+	Template_CHANNEL_TYPE_MESSENGER       Template_ChannelType = 2
+	Template_CHANNEL_TYPE_EMAIL           Template_ChannelType = 3
+	Template_CHANNEL_TYPE_SMS             Template_ChannelType = 4
+)
+
+// Enum value maps for Template_ChannelType.
+var (
+	Template_ChannelType_name = map[int32]string{
+		0: "CHANNEL_TYPE_UNSPECIFIED",
+		1: "CHANNEL_TYPE_PUSH_MOBILE_APP",
+		2: "CHANNEL_TYPE_MESSENGER",
+		3: "CHANNEL_TYPE_EMAIL",
+		4: "CHANNEL_TYPE_SMS",
+	}
+	Template_ChannelType_value = map[string]int32{
+		"CHANNEL_TYPE_UNSPECIFIED":     0,
+		"CHANNEL_TYPE_PUSH_MOBILE_APP": 1,
+		"CHANNEL_TYPE_MESSENGER":       2,
+		"CHANNEL_TYPE_EMAIL":           3,
+		"CHANNEL_TYPE_SMS":             4,
+	}
+)
+
+func (x Template_ChannelType) Enum() *Template_ChannelType {
+	p := new(Template_ChannelType)
+	*p = x
+	return p
+}
+
+func (x Template_ChannelType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Template_ChannelType) Descriptor() protoreflect.EnumDescriptor {
+	return file_spec_v1_service_proto_enumTypes[0].Descriptor()
+}
+
+func (Template_ChannelType) Type() protoreflect.EnumType {
+	return &file_spec_v1_service_proto_enumTypes[0]
+}
+
+func (x Template_ChannelType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Template_ChannelType.Descriptor instead.
+func (Template_ChannelType) EnumDescriptor() ([]byte, []int) {
+	return file_spec_v1_service_proto_rawDescGZIP(), []int{0, 0}
+}
+
+type Template struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Uid           string                 `protobuf:"bytes,1,opt,name=uid,proto3" json:"uid,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Displayname   string                 `protobuf:"bytes,3,opt,name=displayname,proto3" json:"displayname,omitempty"`
+	Channel       Template_ChannelType   `protobuf:"varint,3,opt,name=channel,proto3,enum=ns.notification.service.api.v1.Template_ChannelType" json:"channel,omitempty"`
 	Content       string                 `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
-	Params        map[string]string      `protobuf:"bytes,5,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *NotificationTemplate) Reset() {
-	*x = NotificationTemplate{}
+func (x *Template) Reset() {
+	*x = Template{}
 	mi := &file_spec_v1_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *NotificationTemplate) String() string {
+func (x *Template) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NotificationTemplate) ProtoMessage() {}
+func (*Template) ProtoMessage() {}
 
-func (x *NotificationTemplate) ProtoReflect() protoreflect.Message {
+func (x *Template) ProtoReflect() protoreflect.Message {
 	mi := &file_spec_v1_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -57,69 +111,62 @@ func (x *NotificationTemplate) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NotificationTemplate.ProtoReflect.Descriptor instead.
-func (*NotificationTemplate) Descriptor() ([]byte, []int) {
+// Deprecated: Use Template.ProtoReflect.Descriptor instead.
+func (*Template) Descriptor() ([]byte, []int) {
 	return file_spec_v1_service_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *NotificationTemplate) GetId() string {
+func (x *Template) GetUid() string {
 	if x != nil {
-		return x.Id
+		return x.Uid
 	}
 	return ""
 }
 
-func (x *NotificationTemplate) GetName() string {
+func (x *Template) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *NotificationTemplate) GetDisplayname() string {
+func (x *Template) GetChannel() Template_ChannelType {
 	if x != nil {
-		return x.Displayname
+		return x.Channel
 	}
-	return ""
+	return Template_CHANNEL_TYPE_UNSPECIFIED
 }
 
-func (x *NotificationTemplate) GetContent() string {
+func (x *Template) GetContent() string {
 	if x != nil {
 		return x.Content
 	}
 	return ""
 }
 
-func (x *NotificationTemplate) GetParams() map[string]string {
-	if x != nil {
-		return x.Params
-	}
-	return nil
-}
-
-type CreateNotificationTemplateRequest struct {
+type TemplateGroup struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Displayname   string                 `protobuf:"bytes,1,opt,name=displayname,proto3" json:"displayname,omitempty"`
-	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
-	Params        map[string]string      `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Uid           string                 `protobuf:"bytes,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Templates     []*Template            `protobuf:"bytes,3,rep,name=templates,proto3" json:"templates,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateNotificationTemplateRequest) Reset() {
-	*x = CreateNotificationTemplateRequest{}
+func (x *TemplateGroup) Reset() {
+	*x = TemplateGroup{}
 	mi := &file_spec_v1_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateNotificationTemplateRequest) String() string {
+func (x *TemplateGroup) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateNotificationTemplateRequest) ProtoMessage() {}
+func (*TemplateGroup) ProtoMessage() {}
 
-func (x *CreateNotificationTemplateRequest) ProtoReflect() protoreflect.Message {
+func (x *TemplateGroup) ProtoReflect() protoreflect.Message {
 	mi := &file_spec_v1_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -131,53 +178,55 @@ func (x *CreateNotificationTemplateRequest) ProtoReflect() protoreflect.Message 
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateNotificationTemplateRequest.ProtoReflect.Descriptor instead.
-func (*CreateNotificationTemplateRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TemplateGroup.ProtoReflect.Descriptor instead.
+func (*TemplateGroup) Descriptor() ([]byte, []int) {
 	return file_spec_v1_service_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateNotificationTemplateRequest) GetDisplayname() string {
+func (x *TemplateGroup) GetUid() string {
 	if x != nil {
-		return x.Displayname
+		return x.Uid
 	}
 	return ""
 }
 
-func (x *CreateNotificationTemplateRequest) GetContent() string {
+func (x *TemplateGroup) GetName() string {
 	if x != nil {
-		return x.Content
+		return x.Name
 	}
 	return ""
 }
 
-func (x *CreateNotificationTemplateRequest) GetParams() map[string]string {
+func (x *TemplateGroup) GetTemplates() []*Template {
 	if x != nil {
-		return x.Params
+		return x.Templates
 	}
 	return nil
 }
 
-type CreateNotificationTemplateReplay struct {
+type CreateTemplateGroupRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Template      *NotificationTemplate  `protobuf:"bytes,1,opt,name=template,proto3" json:"template,omitempty"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Template      []*Template            `protobuf:"bytes,2,rep,name=template,proto3" json:"template,omitempty"`
+	Variables     []string               `protobuf:"bytes,3,rep,name=variables,proto3" json:"variables,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateNotificationTemplateReplay) Reset() {
-	*x = CreateNotificationTemplateReplay{}
+func (x *CreateTemplateGroupRequest) Reset() {
+	*x = CreateTemplateGroupRequest{}
 	mi := &file_spec_v1_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateNotificationTemplateReplay) String() string {
+func (x *CreateTemplateGroupRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateNotificationTemplateReplay) ProtoMessage() {}
+func (*CreateTemplateGroupRequest) ProtoMessage() {}
 
-func (x *CreateNotificationTemplateReplay) ProtoReflect() protoreflect.Message {
+func (x *CreateTemplateGroupRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_spec_v1_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -189,14 +238,72 @@ func (x *CreateNotificationTemplateReplay) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateNotificationTemplateReplay.ProtoReflect.Descriptor instead.
-func (*CreateNotificationTemplateReplay) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateTemplateGroupRequest.ProtoReflect.Descriptor instead.
+func (*CreateTemplateGroupRequest) Descriptor() ([]byte, []int) {
 	return file_spec_v1_service_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *CreateNotificationTemplateReplay) GetTemplate() *NotificationTemplate {
+func (x *CreateTemplateGroupRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateTemplateGroupRequest) GetTemplate() []*Template {
 	if x != nil {
 		return x.Template
+	}
+	return nil
+}
+
+func (x *CreateTemplateGroupRequest) GetVariables() []string {
+	if x != nil {
+		return x.Variables
+	}
+	return nil
+}
+
+type CreateTemplateGroupReplay struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TemplateGroup *TemplateGroup         `protobuf:"bytes,1,opt,name=template_group,json=templateGroup,proto3" json:"template_group,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateTemplateGroupReplay) Reset() {
+	*x = CreateTemplateGroupReplay{}
+	mi := &file_spec_v1_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTemplateGroupReplay) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTemplateGroupReplay) ProtoMessage() {}
+
+func (x *CreateTemplateGroupReplay) ProtoReflect() protoreflect.Message {
+	mi := &file_spec_v1_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTemplateGroupReplay.ProtoReflect.Descriptor instead.
+func (*CreateTemplateGroupReplay) Descriptor() ([]byte, []int) {
+	return file_spec_v1_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CreateTemplateGroupReplay) GetTemplateGroup() *TemplateGroup {
+	if x != nil {
+		return x.TemplateGroup
 	}
 	return nil
 }
@@ -205,27 +312,30 @@ var File_spec_v1_service_proto protoreflect.FileDescriptor
 
 const file_spec_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"\x15spec/v1/service.proto\x12\x1ens.notification.service.api.v1\"\x8b\x02\n" +
-	"\x14NotificationTemplate\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vdisplayname\x18\x03 \x01(\tR\vdisplayname\x12\x18\n" +
-	"\acontent\x18\x04 \x01(\tR\acontent\x12X\n" +
-	"\x06params\x18\x05 \x03(\v2@.ns.notification.service.api.v1.NotificationTemplate.ParamsEntryR\x06params\x1a9\n" +
-	"\vParamsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x81\x02\n" +
-	"!CreateNotificationTemplateRequest\x12 \n" +
-	"\vdisplayname\x18\x01 \x01(\tR\vdisplayname\x12\x18\n" +
-	"\acontent\x18\x02 \x01(\tR\acontent\x12e\n" +
-	"\x06params\x18\x03 \x03(\v2M.ns.notification.service.api.v1.CreateNotificationTemplateRequest.ParamsEntryR\x06params\x1a9\n" +
-	"\vParamsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"t\n" +
-	" CreateNotificationTemplateReplay\x12P\n" +
-	"\btemplate\x18\x01 \x01(\v24.ns.notification.service.api.v1.NotificationTemplateR\btemplate2\xbb\x01\n" +
-	"\x13NotificationService\x12\xa3\x01\n" +
-	"\x1aCreateNotificationTemplate\x12A.ns.notification.service.api.v1.CreateNotificationTemplateRequest\x1a@.ns.notification.service.api.v1.CreateNotificationTemplateReplay\"\x00B2Z0github.com/neryzx-ns/notification-service-api/v1b\x06proto3"
+	"\x15spec/v1/service.proto\x12\x1ens.notification.service.api.v1\"\xb4\x02\n" +
+	"\bTemplate\x12\x10\n" +
+	"\x03uid\x18\x01 \x01(\tR\x03uid\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12N\n" +
+	"\achannel\x18\x03 \x01(\x0e24.ns.notification.service.api.v1.Template.ChannelTypeR\achannel\x12\x18\n" +
+	"\acontent\x18\x04 \x01(\tR\acontent\"\x97\x01\n" +
+	"\vChannelType\x12\x1c\n" +
+	"\x18CHANNEL_TYPE_UNSPECIFIED\x10\x00\x12 \n" +
+	"\x1cCHANNEL_TYPE_PUSH_MOBILE_APP\x10\x01\x12\x1a\n" +
+	"\x16CHANNEL_TYPE_MESSENGER\x10\x02\x12\x16\n" +
+	"\x12CHANNEL_TYPE_EMAIL\x10\x03\x12\x14\n" +
+	"\x10CHANNEL_TYPE_SMS\x10\x04\"}\n" +
+	"\rTemplateGroup\x12\x10\n" +
+	"\x03uid\x18\x01 \x01(\tR\x03uid\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12F\n" +
+	"\ttemplates\x18\x03 \x03(\v2(.ns.notification.service.api.v1.TemplateR\ttemplates\"\x94\x01\n" +
+	"\x1aCreateTemplateGroupRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12D\n" +
+	"\btemplate\x18\x02 \x03(\v2(.ns.notification.service.api.v1.TemplateR\btemplate\x12\x1c\n" +
+	"\tvariables\x18\x03 \x03(\tR\tvariables\"q\n" +
+	"\x19CreateTemplateGroupReplay\x12T\n" +
+	"\x0etemplate_group\x18\x01 \x01(\v2-.ns.notification.service.api.v1.TemplateGroupR\rtemplateGroup2\xa6\x01\n" +
+	"\x13NotificationService\x12\x8e\x01\n" +
+	"\x13CreateTemplateGroup\x12:.ns.notification.service.api.v1.CreateTemplateGroupRequest\x1a9.ns.notification.service.api.v1.CreateTemplateGroupReplay\"\x00B2Z0github.com/neryzx-ns/notification-service-api/v1b\x06proto3"
 
 var (
 	file_spec_v1_service_proto_rawDescOnce sync.Once
@@ -239,25 +349,27 @@ func file_spec_v1_service_proto_rawDescGZIP() []byte {
 	return file_spec_v1_service_proto_rawDescData
 }
 
-var file_spec_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_spec_v1_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_spec_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_spec_v1_service_proto_goTypes = []any{
-	(*NotificationTemplate)(nil),              // 0: ns.notification.service.api.v1.NotificationTemplate
-	(*CreateNotificationTemplateRequest)(nil), // 1: ns.notification.service.api.v1.CreateNotificationTemplateRequest
-	(*CreateNotificationTemplateReplay)(nil),  // 2: ns.notification.service.api.v1.CreateNotificationTemplateReplay
-	nil,                                       // 3: ns.notification.service.api.v1.NotificationTemplate.ParamsEntry
-	nil,                                       // 4: ns.notification.service.api.v1.CreateNotificationTemplateRequest.ParamsEntry
+	(Template_ChannelType)(0),          // 0: ns.notification.service.api.v1.Template.ChannelType
+	(*Template)(nil),                   // 1: ns.notification.service.api.v1.Template
+	(*TemplateGroup)(nil),              // 2: ns.notification.service.api.v1.TemplateGroup
+	(*CreateTemplateGroupRequest)(nil), // 3: ns.notification.service.api.v1.CreateTemplateGroupRequest
+	(*CreateTemplateGroupReplay)(nil),  // 4: ns.notification.service.api.v1.CreateTemplateGroupReplay
 }
 var file_spec_v1_service_proto_depIdxs = []int32{
-	3, // 0: ns.notification.service.api.v1.NotificationTemplate.params:type_name -> ns.notification.service.api.v1.NotificationTemplate.ParamsEntry
-	4, // 1: ns.notification.service.api.v1.CreateNotificationTemplateRequest.params:type_name -> ns.notification.service.api.v1.CreateNotificationTemplateRequest.ParamsEntry
-	0, // 2: ns.notification.service.api.v1.CreateNotificationTemplateReplay.template:type_name -> ns.notification.service.api.v1.NotificationTemplate
-	1, // 3: ns.notification.service.api.v1.NotificationService.CreateNotificationTemplate:input_type -> ns.notification.service.api.v1.CreateNotificationTemplateRequest
-	2, // 4: ns.notification.service.api.v1.NotificationService.CreateNotificationTemplate:output_type -> ns.notification.service.api.v1.CreateNotificationTemplateReplay
-	4, // [4:5] is the sub-list for method output_type
-	3, // [3:4] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	0, // 0: ns.notification.service.api.v1.Template.channel:type_name -> ns.notification.service.api.v1.Template.ChannelType
+	1, // 1: ns.notification.service.api.v1.TemplateGroup.templates:type_name -> ns.notification.service.api.v1.Template
+	1, // 2: ns.notification.service.api.v1.CreateTemplateGroupRequest.template:type_name -> ns.notification.service.api.v1.Template
+	2, // 3: ns.notification.service.api.v1.CreateTemplateGroupReplay.template_group:type_name -> ns.notification.service.api.v1.TemplateGroup
+	3, // 4: ns.notification.service.api.v1.NotificationService.CreateTemplateGroup:input_type -> ns.notification.service.api.v1.CreateTemplateGroupRequest
+	4, // 5: ns.notification.service.api.v1.NotificationService.CreateTemplateGroup:output_type -> ns.notification.service.api.v1.CreateTemplateGroupReplay
+	5, // [5:6] is the sub-list for method output_type
+	4, // [4:5] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_spec_v1_service_proto_init() }
@@ -270,13 +382,14 @@ func file_spec_v1_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_spec_v1_service_proto_rawDesc), len(file_spec_v1_service_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   5,
+			NumEnums:      1,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_spec_v1_service_proto_goTypes,
 		DependencyIndexes: file_spec_v1_service_proto_depIdxs,
+		EnumInfos:         file_spec_v1_service_proto_enumTypes,
 		MessageInfos:      file_spec_v1_service_proto_msgTypes,
 	}.Build()
 	File_spec_v1_service_proto = out.File

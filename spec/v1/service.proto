@@ -5,23 +5,36 @@ package ns.notification.service.api.v1;
 option go_package = "github.com/neryzx-ns/notification-service-api/v1";
 
 service NotificationService {
-  rpc CreateNotificationTemplate(CreateNotificationTemplateRequest) returns (CreateNotificationTemplateReplay) {}
+  rpc CreateTemplateGroup(CreateTemplateGroupRequest) returns (CreateTemplateGroupReplay) {}
 }
 
-message NotificationTemplate {
-  string id = 1;
+message Template {
+  enum ChannelType {
+    CHANNEL_TYPE_UNSPECIFIED = 0;
+    CHANNEL_TYPE_PUSH_MOBILE_APP = 1;
+    CHANNEL_TYPE_MESSENGER = 2;
+    CHANNEL_TYPE_EMAIL = 3;
+    CHANNEL_TYPE_SMS = 4;
+  }
+
+  string uid = 1;
   string name = 2;
-  string displayname = 3;
+  ChannelType channel = 3;
   string content = 4;
-  map<string, string> params = 5;
 }
 
-message CreateNotificationTemplateRequest {
-  string displayname = 1;
-  string content = 2;
-  map<string, string> params = 3;
+message TemplateGroup {
+  string uid = 1;
+  string name = 2;
+  repeated Template templates = 3;
 }
 
-message CreateNotificationTemplateReplay {
-  NotificationTemplate template = 1;
+message CreateTemplateGroupRequest {
+  string name = 1;
+  repeated Template template = 2;
+  repeated string variables = 3;
+}
+
+message CreateTemplateGroupReplay {
+  TemplateGroup template_group = 1;
 }

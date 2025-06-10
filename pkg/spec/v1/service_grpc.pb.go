@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	NotificationService_CreateNotificationTemplate_FullMethodName = "/ns.notification.service.api.v1.NotificationService/CreateNotificationTemplate"
+	NotificationService_CreateTemplateGroup_FullMethodName = "/ns.notification.service.api.v1.NotificationService/CreateTemplateGroup"
 )
 
 // NotificationServiceClient is the client API for NotificationService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NotificationServiceClient interface {
-	CreateNotificationTemplate(ctx context.Context, in *CreateNotificationTemplateRequest, opts ...grpc.CallOption) (*CreateNotificationTemplateReplay, error)
+	CreateTemplateGroup(ctx context.Context, in *CreateTemplateGroupRequest, opts ...grpc.CallOption) (*CreateTemplateGroupReplay, error)
 }
 
 type notificationServiceClient struct {
@@ -37,10 +37,10 @@ func NewNotificationServiceClient(cc grpc.ClientConnInterface) NotificationServi
 	return &notificationServiceClient{cc}
 }
 
-func (c *notificationServiceClient) CreateNotificationTemplate(ctx context.Context, in *CreateNotificationTemplateRequest, opts ...grpc.CallOption) (*CreateNotificationTemplateReplay, error) {
+func (c *notificationServiceClient) CreateTemplateGroup(ctx context.Context, in *CreateTemplateGroupRequest, opts ...grpc.CallOption) (*CreateTemplateGroupReplay, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateNotificationTemplateReplay)
-	err := c.cc.Invoke(ctx, NotificationService_CreateNotificationTemplate_FullMethodName, in, out, cOpts...)
+	out := new(CreateTemplateGroupReplay)
+	err := c.cc.Invoke(ctx, NotificationService_CreateTemplateGroup_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *notificationServiceClient) CreateNotificationTemplate(ctx context.Conte
 // All implementations must embed UnimplementedNotificationServiceServer
 // for forward compatibility.
 type NotificationServiceServer interface {
-	CreateNotificationTemplate(context.Context, *CreateNotificationTemplateRequest) (*CreateNotificationTemplateReplay, error)
+	CreateTemplateGroup(context.Context, *CreateTemplateGroupRequest) (*CreateTemplateGroupReplay, error)
 	mustEmbedUnimplementedNotificationServiceServer()
 }
 
@@ -62,8 +62,8 @@ type NotificationServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedNotificationServiceServer struct{}
 
-func (UnimplementedNotificationServiceServer) CreateNotificationTemplate(context.Context, *CreateNotificationTemplateRequest) (*CreateNotificationTemplateReplay, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateNotificationTemplate not implemented")
+func (UnimplementedNotificationServiceServer) CreateTemplateGroup(context.Context, *CreateTemplateGroupRequest) (*CreateTemplateGroupReplay, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTemplateGroup not implemented")
 }
 func (UnimplementedNotificationServiceServer) mustEmbedUnimplementedNotificationServiceServer() {}
 func (UnimplementedNotificationServiceServer) testEmbeddedByValue()                             {}
@@ -86,20 +86,20 @@ func RegisterNotificationServiceServer(s grpc.ServiceRegistrar, srv Notification
 	s.RegisterService(&NotificationService_ServiceDesc, srv)
 }
 
-func _NotificationService_CreateNotificationTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateNotificationTemplateRequest)
+func _NotificationService_CreateTemplateGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTemplateGroupRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NotificationServiceServer).CreateNotificationTemplate(ctx, in)
+		return srv.(NotificationServiceServer).CreateTemplateGroup(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: NotificationService_CreateNotificationTemplate_FullMethodName,
+		FullMethod: NotificationService_CreateTemplateGroup_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NotificationServiceServer).CreateNotificationTemplate(ctx, req.(*CreateNotificationTemplateRequest))
+		return srv.(NotificationServiceServer).CreateTemplateGroup(ctx, req.(*CreateTemplateGroupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -112,8 +112,8 @@ var NotificationService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*NotificationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateNotificationTemplate",
-			Handler:    _NotificationService_CreateNotificationTemplate_Handler,
+			MethodName: "CreateTemplateGroup",
+			Handler:    _NotificationService_CreateTemplateGroup_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
